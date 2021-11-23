@@ -1,5 +1,5 @@
 -- Erstellen der Datenbank für ein Szenario Physiotherapie
---Gruppe: Bastian Litzmann, Leon Michael Barret, Moritz Rohleder
+--Gruppe: Bastian Litzmann, Leon Michael Barratt, Moritz Rohleder
 
 --	---------------------------------------------------------------------------------
 --				Erstellen der Tabellen für die Datenbank
