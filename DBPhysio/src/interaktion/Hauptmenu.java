@@ -1,7 +1,8 @@
 package interaktion;
 import java.util.Scanner;
 public class Hauptmenu {
-	private String[] tabellenNamen;
+	private static final String[] tabellen={"patient","kursteilnahme","kurs","mitarbeiter","qualifikation", "qualifiziert"};
+	private static final int[] stellen = {13,3,5,5,3,2};
 	private static int wahl;
 	public static Scanner sc = new Scanner(System.in);
 	public static void main(String[] args) {
