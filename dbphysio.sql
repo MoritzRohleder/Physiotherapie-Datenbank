@@ -5,6 +5,13 @@
 --				Erstellen der Tabellen für die Datenbank
 --	---------------------------------------------------------------------------------
 
+--Datenbank einmal aufräumen
+DROP TABLE patient CASCADE CONSTRAINTS;
+DROP TABLE qualifikation CASCADE CONSTRAINTS;
+DROP TABLE mitabeiter CASCADE CONSTRAINTS;
+DROP TABLE kurs CASCADE CONSTRAINTS;
+DROP TABLE kursteilnahme CASCADE CONSTRAINTS;
+
 --Tabelle für Patienten
 CREATE TABLE patient(
 	idPatient 			NUMBER(10) NOT NULL PRIMARY KEY,
