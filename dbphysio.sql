@@ -6,11 +6,11 @@
 --	---------------------------------------------------------------------------------
 
 --Datenbank einmal aufräumen
---DROP TABLE patient CASCADE CONSTRAINTS;
---DROP TABLE qualifikation CASCADE CONSTRAINTS;
---DROP TABLE mitabeiter CASCADE CONSTRAINTS;
---DROP TABLE kurs CASCADE CONSTRAINTS;
---DROP TABLE kursteilnahme CASCADE CONSTRAINTS;
+DROP TABLE patient CASCADE CONSTRAINTS;
+DROP TABLE qualifikation CASCADE CONSTRAINTS;
+DROP TABLE mitarbeiter CASCADE CONSTRAINTS;
+DROP TABLE kurs CASCADE CONSTRAINTS;
+DROP TABLE kursteilnahme CASCADE CONSTRAINTS;
 
 --Tabelle für Patienten
 CREATE TABLE patient (
@@ -54,14 +54,14 @@ CREATE TABLE kurs (
 	beschreibung	VARCHAR (100) NOT NULL,
 	idMitarbeiter	NUMBER(10) NOT NULL,
 	preis			NUMBER (19) CHECK (preis > 0),
-	FOREIGN KEY (idMitarbeiter) REFERENCES mitabeiter(idMitarbeiter)
+	FOREIGN KEY (idMitarbeiter) REFERENCES mitarbeiter(idMitarbeiter)
 );
 
 --Tabelle für Kursteilnahmen
 CREATE TABLE kursteilnahme (
 	idKurs		NUMBER(10) NOT NULL,
 	idPatient	NUMBER(10) NOT NULL,
-	termin		VARCHAR(45)
+	termin		VARCHAR(45),
 	PRIMARY KEY (idKurs, idPatient),
 	FOREIGN KEY (idKurs) REFERENCES kurs(idKurs),
 	FOREIGN KEY (idPatient) REFERENCES patient(idPatient)
@@ -78,7 +78,7 @@ INSERT INTO patient VALUES (2, 'Hans', 'Jasmin', 'weiblich', '31.08.1974', 'AOK'
 
 --Einfügen der Qualifikationen
 -- idQuali, bezeichnung, idParent
-INSERT INTO qualifikation VALUES (1, Physiotherapeut, NULL);
+INSERT INTO qualifikation VALUES (1, 'Physiotherapeut', NULL);
 
 --Einfügen der Mitarbeiter
 -- idMitarbeiter, nachname, vorname, geschlecht, idQuali
