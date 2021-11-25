@@ -12,7 +12,7 @@ public class Hauptmenu {
 			wahl = sc.nextInt();
 			switch (wahl){
 				case 1: // Anzeigen
-					tabellenauswahlmenue();
+					System.out.println(dbverbindung.DBManager.showTable(tabellen[tabellenauswahlmenue()]));
 					break;
 				case 2: // Einfügen
 					break;
@@ -39,29 +39,28 @@ public class Hauptmenu {
 		System.out.println("(5) Anzahl Tupel");
 		System.out.println("(6) Ende");
 	}
-	public static void tabellenauswahlmenue()
-	{
-
-		System.out.println("(1) Tabelle1");
-		System.out.println("(2) Tabelle2");
-		System.out.println("(3) Tabelle3");
-		System.out.println("(4) Tabelle4");
-		System.out.println("(5) Tabelle5");
+	
+	public static int tabellenauswahlmenue() {
+		System.out.printf("(1) %s\n", tabellen[0]);
+		System.out.printf("(2) %s\n", tabellen[1]);
+		System.out.printf("(3) %s\n", tabellen[2]);
+		System.out.printf("(4) %s\n", tabellen[3]);
+		System.out.printf("(5) %s\n", tabellen[4]);
 		System.out.println("(6) Ende");
-		wahl = sc.nextInt();
-		switch(wahl){
-			case 1: // Tabelle 1
+		return sc.nextInt() - 1;
+		/*switch(wahl){
+			case 0: // Tabelle 1
 				break;
-			case 2: // Tabelle 2
+			case 1: // Tabelle 2
 				break;
-			case 3: // Tabelle 3
+			case 2: // Tabelle 3
 				break;
-			case 4: // Tabelle 4
+			case 3: // Tabelle 4
 				break;
-			case 5: // Tabelle 5
+			case 4: // Tabelle 5
 				break;
 			default:
 				break;
-		}
+		}*/
 	}
 }
