@@ -84,23 +84,88 @@ public class DBManager {
      * This method is to update existing data in the given table
      * The column names, and the table name are not checked if they actually exists in the database
      * The datatypes of the values is not checked if it is the correct one
+     * columns and values need to have the same amount of entries
      * 
      * @param table	A string containing the name of the table that is to be updated
      * @param columns	An array of Strings containing the names of the columns where values are to be updated
      * @param values	An array of Strings containing the values that are to replace the old ones
-     * @param primaryKeys	An array of integers containing the ID/IDs that are being updated
+     * @param conditionColumns	An array of Strings containing the column names where conditions are set
+     * @param condition An array of Strings containing the conditions to be set in the columns defined in conditionColumns
      */
-    public static void update(String table, String[] columns, String[] values, int[] primaryKeys) {
-    	String sqlString = String.format("UPDATE ");
+    public static void update(String table, String[] columns, String[] values, String[] conditionColumns, String[] condition) {
+    	String sqlString = String.format("UPDATE %s", table);
+    	for(int i = 0; i < columns.length; i++) {
+    		if(i+1 < columns.length) {
+    			sqlString.concat(String.format("SET %s=%s, ", columns[i], values[i]));
+    		}else {
+    			sqlString.concat(String.format("SET %s=%s ", columns[i], values[i]));
+    		}
+    	}
+    	for(int j = 0; j < conditionColumns.length; j++) {
+    		if(j == 0) {
+    			sqlString.concat(String.format("WHERE %s = %s ", conditionColumns[j], condition[j]));
+    		}else {
+    			sqlString.concat(String.format("AND %s = %s ", conditionColumns[j], condition[j]));
+    		}
+    	}
+    	try(Connection con = DriverManager.getConnection(url)){
+    		Class.forName("oracle.jdbc.driver.OracleDriver");
+    		PreparedStatement stmt = con.prepareStatement(sqlString);
+    		stmt.execute();
+    		stmt.close();
+    	} catch(Exception e) {
+    		e.printStackTrace();
+    	}
     }
     
     /**
      * This method is to delete data from the given table
+     * it is required that columns and primaryKeys have the same length
+     * and their values need to correspond to each other
      * 
-     * @param table
-     * @param primaryKeys
+     * @param table	A string containing the name of the table where something is to be deleted
+     * @param columns	An array of Strings containing the column names where conditions are set
+     * @param primaryKeys	An array of Strings containing the primary keys of the data that is to be deleted
      */
-    public static void delete(String table, int[] primaryKeys) {
+    public static void delete(String table, String[] columns, int[] primaryKeys) {
+    	String sqlString = String.format("DELETE FROM %s", table);
+    	for(int i = 0; i < columns.length; i++) {
+    		if(i == 0) {
+    			sqlString.concat(String.format("WHERE %s=%s", columns[i], primaryKeys[i]));
+    		}else {
+    			sqlString.concat(String.format("AND %s=%s", columns[i], primaryKeys[i]));
+    		}
+    	}
+    }
+    
+    /*
+     * Following from here come specific queries that are defined specifically for this database
+     * - Anzahl Tupel(Kinder) der jeweiligen Qualifikationen
+     * - Eine Liste der Kursmitglieder des gegebenen Kurses(ID)
+     * - Die Anzahl der Mitglieder aller Kurse
+     * - Die Anzahl der Mitglieder eines gegebenen Kurses
+     * - Eine Liste der Mitarbeiter mit der gegebenen Qualifikation(ID)
+     * - Die Anzahl der Mitarbeiter die eine gegebene Qualifikation haben(ID)
+     * - Die Anzahl der qualifizierten Mitarbeiter aller Qualifikationen
+     */
+    
+    /**
+     * 
+     * @param idKurs
+     * @return
+     */
+    public static String getParticipants(int idKurs) {
+    	String sqlString = "";
+    	String ausgabe = "";
+    	return ausgabe;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public static String getParticipantCount() {
     	
+    	return "";
     }
 }
