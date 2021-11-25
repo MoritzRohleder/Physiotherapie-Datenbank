@@ -9,6 +9,7 @@
 DROP TABLE patient CASCADE CONSTRAINTS;
 DROP TABLE qualifikation CASCADE CONSTRAINTS;
 DROP TABLE mitarbeiter CASCADE CONSTRAINTS;
+DROP TABLE qualfiziert CASCADE CONSTRAINTS;
 DROP TABLE kurs CASCADE CONSTRAINTS;
 DROP TABLE kursteilnahme CASCADE CONSTRAINTS;
 
@@ -42,8 +43,14 @@ CREATE TABLE mitarbeiter (
 	idMitarbeiter	NUMBER(10) NOT NULL PRIMARY KEY,
 	nachname		VARCHAR(45) NOT NULL,
 	vorname			VARCHAR(45) NOT NULL,
-	geschlecht		VARCHAR(8) CHECK (Geschlecht IN ('männlich','weiblich','divers')),
-	idQuali			NUMBER(10) NOT NULL,
+	geschlecht		VARCHAR(8) CHECK (Geschlecht IN ('männlich','weiblich','divers'))
+);
+
+CREATE TABLE qualfiziert (
+	idMitarbeiter NUMBER(10) NOT NULL,
+	idQuali NUMBER(10) NOT NULL,
+	PRIMARY KEY (idMitarbeiter, idQuali),
+	FOREIGN KEY (idMitarbeiter) REFERENCES mitarbeiter(idMitarbeiter),
 	FOREIGN KEY (idQuali) REFERENCES qualifikation(idQuali)
 );
 
@@ -82,8 +89,13 @@ INSERT INTO qualifikation VALUES (1, 'Physiotherapeut', NULL);
 
 --Einfügen der Mitarbeiter
 -- idMitarbeiter, nachname, vorname, geschlecht, idQuali
-INSERT INTO mitarbeiter VALUES (1, 'Risel', 'Hubert', 'männlich', 1);
-INSERT INTO mitarbeiter VALUES (2, 'Reinert', 'Melissa', 'weiblich', 1);
+INSERT INTO mitarbeiter VALUES (1, 'Risel', 'Hubert', 'männlich');
+INSERT INTO mitarbeiter VALUES (2, 'Reinert', 'Melissa', 'weiblich');
+
+--Einfügen der Qualifikationen der einzelnen Mitarbeiter
+-- idMitarbeiter, idQuali
+INSERT INTO qualfiziert VALUES (1, 1);
+INSERT INTO qualfiziert VALUES (2, 1);
 
 --Einfügen der Kurse
 -- idKurs, bezeichnung, beschreibung, idMitarbeiter, preis
