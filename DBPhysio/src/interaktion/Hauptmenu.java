@@ -26,7 +26,7 @@ public class Hauptmenu {
 				default:
 					break;
 			}
-		}while (wahl==6);
+		}while (wahl!=6);
 
 	}
 	public static void menue()
