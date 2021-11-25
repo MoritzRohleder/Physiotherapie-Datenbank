@@ -6,6 +6,8 @@
  * @author Moritz Rohleder
  * @author Leon Michael Barratt
  * @author Bastian Litzmann
+ * 
+ * @version 1
  */
 package dbverbindung;
 
@@ -17,10 +19,10 @@ public class DBManager {
 
     /**
      * Returns the given table as formatted String that is keeping the Table Structure
-     * There is no check if the table name exists in the database in this method 
+     * There is no check if the table name exists in the database in this method
      * 
      * @param	table	a name of a database table
-     * @return 			a string containing the outcome of the query, formated for further use 
+     * @return 	a string containing the outcome of the query, formated for further use 
      */
     public static String showTable(String table){
         String sqlString = String.format("SELECT * FROM %s",table);
@@ -50,12 +52,13 @@ public class DBManager {
     
     /**
      * This method is to insert data into the given table
+     * There is no check if the table exists or not.
      * The values are not checked if they fit the datatype of the database,
      * neither if there are enough values given or not.
      * That is to be handled with the interface or the backend.
      * The order of the values in the array needs to be as with a normal SQL INSERT statement.
      * 
-     * @param table		A String containing the name of the table, the data is to be inserted to
+     * @param table	A String containing the name of the table, the data is to be inserted to
      * @param values	An array of Strings that contain the values that are to be inserted into the database
      */
     public static void insert(String table, String[] values) {
@@ -67,5 +70,27 @@ public class DBManager {
     		}
     	}
     	sqlString.concat(")");
+    	try(Connection con = DriverManager.getConnection(url)){
+    		Class.forName("oracle.jdbc.driver.OracleDriver");
+    		PreparedStatement stmt = con.prepareStatement(sqlString);
+    		stmt.execute();
+    		stmt.close();
+    	} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
+    /**
+     * This method is to update existing data in the given table
+     * The column names, and the table name are not checked if they actually exists in the database
+     * The datatypes of the values is not checked if it is the correct one
+     * 
+     * @param table	A string containing the name of the table that is to be updated
+     * @param columns	An array of Strings containing the names of the columns where values are to be updated
+     * @param values	An array of Strings containing the values that are to replace the old ones
+     * @param primaryKeys	An array of integers containing the ID/IDs that are being updated
+     */
+    public static void update(String table, String[] columns, String[] values, int[] primaryKeys) {
+    	
     }
 }
