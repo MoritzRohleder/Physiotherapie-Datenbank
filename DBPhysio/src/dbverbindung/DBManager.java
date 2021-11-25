@@ -91,6 +91,16 @@ public class DBManager {
      * @param primaryKeys	An array of integers containing the ID/IDs that are being updated
      */
     public static void update(String table, String[] columns, String[] values, int[] primaryKeys) {
+    	String sqlString = String.format("UPDATE ");
+    }
+    
+    /**
+     * This method is to delete data from the given table
+     * 
+     * @param table
+     * @param primaryKeys
+     */
+    public static void delete(String table, int[] primaryKeys) {
     	
     }
 }
