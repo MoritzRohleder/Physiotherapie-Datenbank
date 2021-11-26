@@ -86,6 +86,10 @@ INSERT INTO patient VALUES (2, 'Hans', 'Jasmin', 'weiblich', '31.08.1974', 'AOK'
 --Einfügen der Qualifikationen
 -- idQuali, bezeichnung, idParent
 INSERT INTO qualifikation VALUES (1, 'Physiotherapeut', NULL);
+INSERT INTO qualifikation VALUES (2, 'Fort. Physio', 1);
+INSERT INTO qualifikation VALUES (3, 'Trainer', NULL);
+INSERT INTO qualifikation VALUES (4, 'Trainer mit B Lizent', 3);
+INSERT INTO qualifikation VALUES (5, 'Massage', 1);
 
 --Einfügen der Mitarbeiter
 -- idMitarbeiter, nachname, vorname, geschlecht, idQuali

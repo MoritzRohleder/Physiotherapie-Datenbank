@@ -147,12 +147,36 @@ public class DBManager {
     }
     
     /*
-     * Following from here come specific queries that are defined specifically for this database
-     * - Anzahl Tupel(Kinder) der jeweiligen Qualifikationen
-     * - Eine Liste der Mitarbeiter mit der gegebenen Qualifikation(ID)
-     * - Die Anzahl der Mitarbeiter die eine gegebene Qualifikation haben(ID)
-     * - Die Anzahl der qualifizierten Mitarbeiter aller Qualifikationen
+     Following from here come specific queries that are defined specifically for this database
+      - Eine Liste der Mitarbeiter mit der gegebenen Qualifikation(ID)
+      - Die Anzahl der Mitarbeiter die eine gegebene Qualifikation haben(ID)
+      - Die Anzahl der qualifizierten Mitarbeiter aller Qualifikationen
+    */
+    
+    /**
+     * This method is to show the number of Children of each listed qualification
+     * 
+     * @return A formatted String containing the result of the query
      */
+    public static String getChildren() {
+    	String sqlString = "SELECT idParent, count(*) as Children "
+    					 + "FROM qualifikation "
+    					 + "WHERE idparent IS NOT NULL "
+    					 + "GROUP BY idParent ";
+    	String ausgabe = "";
+    	try(Connection con = DriverManager.getConnection(url)){
+    		Class.forName("oracle.jdbc.driver.OracleDriver");
+    		PreparedStatement stmt = con.prepareStatement(sqlString);
+    		ResultSet rs = stmt.executeQuery();
+    		ausgabe.concat(String.format("%-10s|%-10s\n", "ID Qualifikation", "Kinder"));
+    		while(rs.next()) {
+    			ausgabe.concat(String.format("%-10d|%-10d\n", rs.getInt(1), rs.getInt(2)));
+    		}
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return ausgabe;
+    }
     
     /**
      * This method is used to get a list of all participants of a course
