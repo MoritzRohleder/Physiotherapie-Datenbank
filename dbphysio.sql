@@ -82,19 +82,30 @@ CREATE TABLE kursteilnahme (
 --idPatient, nachname, vorname, geschlecht, geburtsdatum, krankenkasse, versichertennummer, tel, mail, wohnort, strasse, plz, hausnummer
 INSERT INTO patient VALUES (1, 'Liebermensch', 'Ralph', 'männlich', '09.03.1986', 'Techniker Krankenkasse', 6470263707, '02873 6725', 'ralph-liebermensch@web.de', 'Düsseldorf', 'Liebstrasse', 40210,5);
 INSERT INTO patient VALUES (2, 'Hans', 'Jasmin', 'weiblich', '31.08.1974', 'AOK', 8765402579, '02634 7680215', 'hans.jasmin@gmail.com', 'Duisburg', 'Stadtallee', 47055, 90);
+INSERT INTO patient VALUES (3, 'Frank', 'Josephine', 'weiblich', '27.11.2000', 'Barmer' 6481695459, '02578 46239', 'kleine.eule@web.de', 'Frankfurt', 'Bahnhofstraße' , 60306, 10);
+INSERT INTO patient VALUES (4, 'Mueller', 'Wolfgang', 'männlich', '24.09.1972', 'Knappschaft', 1798697501, '05602 56294627', 'mueller.muenchen@gmail.de', 'München', 'Tropfstraße', 28947, 87);
+INSERT INTO patient VALUES (5, 'Kastell', 'Nina', 'weiblich', '23.08.1964', 'Techniker Krankenkasse', 8998534687, '02489 31729', 'nina@mellis.de', 'Mühlheim', 'Theodorstraße', 45478, 28);
 
 --Einfügen der Qualifikationen
 -- idQuali, bezeichnung, idParent
 INSERT INTO qualifikation VALUES (1, 'Physiotherapeut', NULL);
-INSERT INTO qualifikation VALUES (2, 'Fort. Physio', 1);
-INSERT INTO qualifikation VALUES (3, 'Trainer', NULL);
-INSERT INTO qualifikation VALUES (4, 'Trainer mit B Lizent', 3);
-INSERT INTO qualifikation VALUES (5, 'Massage', 1);
+INSERT INTO qualifikation VALUES (2, 'Sporttherapeut', NULL);
+INSERT INTO qualifikation VALUES (3, 'Sport und Gymnastic Lehrere', 2);
+INSERT INTO qualifikation VALUES (4, 'Sport und Fitness Kaufmann', 2);
+INSERT INTO qualifikation VALUES (5, 'Sportwissenschaftler', 2);
+INSERT INTO qualifikation VALUES (6, 'Manuelle Therapie (MT)', 1);
+INSERT INTO qualifikation VALUES (7, 'Manuelle Lymphdrainage (MLD)', 1);
+INSERT INTO qualifikation VALUES (8, 'Krankengymnastik nach Bobath (KG-ZNS)', 1);
+INSERT INTO qualifikation VALUES (9, 'Propriozeptive Neuromuskuläre Facilitation (PNF)', 1)
+INSERT INTO qualifikation VALUES (10, 'Gerätegestüzte Krankengymnastik (KGG)', 1);
 
 --Einfügen der Mitarbeiter
 -- idMitarbeiter, nachname, vorname, geschlecht, idQuali
 INSERT INTO mitarbeiter VALUES (1, 'Risel', 'Hubert', 'männlich');
 INSERT INTO mitarbeiter VALUES (2, 'Reinert', 'Melissa', 'weiblich');
+INSERT INTO mitarbeiter VALUES ();
+INSERT INTO mitarbeiter VALUES ();
+INSERT INTO mitarbeiter VALUES ();
 
 --Einfügen der Qualifikationen der einzelnen Mitarbeiter
 -- idMitarbeiter, idQuali
@@ -105,6 +116,8 @@ INSERT INTO qualifiziert VALUES (2, 1);
 -- idKurs, bezeichnung, beschreibung, idMitarbeiter, preis
 INSERT INTO kurs VALUES (1, 'Reha', 'Rehabilitations Kurs', 1, 50);
 INSERT INTO kurs VALUES (2, 'Krankengymnastik', 'Rücken stärkende Gymnastik', 2, 45);
+INSERT INTO kurs VALUES (3, 'KGG', 'Gerätegestüzte Krankengymnastik', 2, 120);
+INSERT INTO kurs VALUES (4, 'Faszien', 'Training mit Rolle', 3, 60);
 
 --Einfügen der Kursteilnahmen
 -- idKurs, idPatient, termin
