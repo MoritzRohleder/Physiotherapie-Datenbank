@@ -93,7 +93,7 @@ public class DBManager {
      * @param condition An array of Strings containing the conditions to be set in the columns defined in conditionColumns
      */
     public static void update(String table, String[] columns, String[] values, String[] conditionColumns, String[] condition) {
-    	String sqlString = String.format("UPDATE %s", table);
+    	String sqlString = String.format("UPDATE %s ", table);
     	for(int i = 0; i < columns.length; i++) {
     		if(i+1 < columns.length) {
     			sqlString.concat(String.format("SET %s=%s, ", columns[i], values[i]));
@@ -128,12 +128,12 @@ public class DBManager {
      * @param primaryKeys	An array of Strings containing the primary keys of the data that is to be deleted
      */
     public static void delete(String table, String[] columns, int[] primaryKeys) {
-    	String sqlString = String.format("DELETE FROM %s", table);
+    	String sqlString = String.format("DELETE FROM %s ", table);
     	for(int i = 0; i < columns.length; i++) {
     		if(i == 0) {
-    			sqlString.concat(String.format("WHERE %s=%s", columns[i], primaryKeys[i]));
+    			sqlString.concat(String.format("WHERE %s=%s ", columns[i], primaryKeys[i]));
     		}else {
-    			sqlString.concat(String.format("AND %s=%s", columns[i], primaryKeys[i]));
+    			sqlString.concat(String.format("AND %s=%s ", columns[i], primaryKeys[i]));
     		}
     	}
     	try(Connection con = DriverManager.getConnection(url)){
@@ -149,26 +149,33 @@ public class DBManager {
     /*
      * Following from here come specific queries that are defined specifically for this database
      * - Anzahl Tupel(Kinder) der jeweiligen Qualifikationen
-     * - Eine Liste der Kursmitglieder des gegebenen Kurses(ID)
-     * - Die Anzahl der Mitglieder aller Kurse
-     * - Die Anzahl der Mitglieder eines gegebenen Kurses
      * - Eine Liste der Mitarbeiter mit der gegebenen Qualifikation(ID)
      * - Die Anzahl der Mitarbeiter die eine gegebene Qualifikation haben(ID)
      * - Die Anzahl der qualifizierten Mitarbeiter aller Qualifikationen
      */
     
     /**
+     * This method is used to get a list of all participants of a course
+     * There is no check if given id is actually in the database or not
      * 
-     * @param idKurs
-     * @return
+     * @param idKurs	An integer value containing the id of the course where the participants are to be listed
+     * @return	A formatted String showing the result of the query
      */
     public static String getParticipants(int idKurs) {
-    	String sqlString = "";
-    	String ausgabe = "";
+    	String sqlString = "SELECT T.idKurs, K.bezeichnung, T.idPatient, P.nachname, P.vorname"
+    					 + "FROM patient P, kursteilnahme T, kurs K"
+    					 + "WHERE P.idPatient = T.idPatient"
+    					 + "AND T.idKurs = K.idKurs"
+    					 + "AND T.idKurs = ?";
+    	String ausgabe = String.format("%-10s|%-25s|%-10s|%-15s|%-15s\n", "ID Kurs", "Kursbezeichnung", "ID Patient", "Nachname", "Vorname");
     	try(Connection con = DriverManager.getConnection(url)){
     		Class.forName("oracle.jdbc.driver.OracleDriver");
     		PreparedStatement stmt = con.prepareStatement(sqlString);
-    		
+    		stmt.setInt(1, idKurs);
+    		ResultSet rs = stmt.executeQuery();
+    		while(rs.next()) {
+    			ausgabe.concat(String.format("%-10d|%-25s|%-10d|%-15s|%-15s\\n", rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5)));
+    		}
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
@@ -177,6 +184,7 @@ public class DBManager {
     
     /**
      * This method returns the number of participants of a course
+     * there is no check if the id given is actually in the database
      * 
      * @param idKurs	An integer value containing the id of the course the user wants to know the participant count of
      * @return	An integer with the number of participants of a course
@@ -211,13 +219,13 @@ public class DBManager {
     					 + "FROM kursteilnahme T, kurs K\r\n"
     					 + "WHERE T.idKurs = K.idKurs\r\n"
     					 + "GROUP BY T.idKurs, k.bezeichnung";
-    	String ausgabe = String.format("%-10s|%-20s|%-10s", "Kurs ID", "Kurs Bezeichnung","Teilnehmerzahl\n");
+    	String ausgabe = String.format("%-10s|%-20s|%-10s\n", "Kurs ID", "Kurs Bezeichnung","Teilnehmerzahl\n");
     	try(Connection con = DriverManager.getConnection(url)){
     		Class.forName("oracle.jdbc.driver.OracleDriver");
     		PreparedStatement stmt = con.prepareStatement(sqlString);
     		ResultSet rs = stmt.executeQuery();
     		while(rs.next()) {
-    			ausgabe.concat(String.format("%-10d|%-20s|%-10d", rs.getInt(1), rs.getString(2), rs.getInt(3)));
+    			ausgabe.concat(String.format("%-10d|%-20s|%-10d\n", rs.getInt(1), rs.getString(2), rs.getInt(3)));
     		}
     	} catch (Exception e) {
     		e.printStackTrace();
