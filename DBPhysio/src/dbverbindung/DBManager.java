@@ -111,7 +111,7 @@ public class DBManager {
     	try(Connection con = DriverManager.getConnection(url)){
     		Class.forName("oracle.jdbc.driver.OracleDriver");
     		PreparedStatement stmt = con.prepareStatement(sqlString);
-    		stmt.execute();
+    		stmt.executeUpdate();
     		stmt.close();
     	} catch(Exception e) {
     		e.printStackTrace();
@@ -136,6 +136,14 @@ public class DBManager {
     			sqlString.concat(String.format("AND %s=%s", columns[i], primaryKeys[i]));
     		}
     	}
+    	try(Connection con = DriverManager.getConnection(url)){
+    		Class.forName("oracle.jdbc.driver.OracleDriver");
+    		PreparedStatement stmt = con.prepareStatement(sqlString);
+    		stmt.execute();
+    		stmt.close();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
     }
     
     /*
@@ -157,15 +165,63 @@ public class DBManager {
     public static String getParticipants(int idKurs) {
     	String sqlString = "";
     	String ausgabe = "";
+    	try(Connection con = DriverManager.getConnection(url)){
+    		Class.forName("oracle.jdbc.driver.OracleDriver");
+    		PreparedStatement stmt = con.prepareStatement(sqlString);
+    		
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
     	return ausgabe;
     }
     
     /**
+     * This method returns the number of participants of a course
      * 
-     * @return
+     * @param idKurs	An integer value containing the id of the course the user wants to know the participant count of
+     * @return	An integer with the number of participants of a course
      */
-    public static String getParticipantCount() {
-    	
-    	return "";
+    public static int getParticipantCount(int idKurs) {
+    	String sqlString = "SELECT DISTINCT T.idKurs, K.bezeichnung, COUNT(T.idPatient) AS Teilnehmer "
+    					 + "FROM kursteilnahme T, kurs K "
+    					 + "WHERE T.idKurs = K.idKurs "
+    					 + "AND T.idKurs = " + idKurs
+    					 + "GROUP BY T.idKurs, k.bezeichnung";
+    	int participantCount = 0;
+    	try(Connection con = DriverManager.getConnection(url)){
+    		Class.forName("oracle.jdbc.driver.OracleDriver");
+    		PreparedStatement stmt = con.prepareStatement(sqlString);
+    		ResultSet rs = stmt.executeQuery();
+    		while(rs.next()) {
+    			participantCount = rs.getInt(3);
+    		}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return participantCount;
+    }
+    
+    /**
+     * This method returns a list of all the offered courses and the number of participants per course
+     * 
+     * @return A String containing a formatted list of the query output
+     */
+    public static String getParticipantCountAll() {
+    	String sqlString = "SELECT DISTINCT T.idKurs, K.bezeichnung, COUNT(T.idPatient) AS Teilnehmer\r\n"
+    					 + "FROM kursteilnahme T, kurs K\r\n"
+    					 + "WHERE T.idKurs = K.idKurs\r\n"
+    					 + "GROUP BY T.idKurs, k.bezeichnung";
+    	String ausgabe = String.format("%-10s|%-20s|%-10s", "Kurs ID", "Kurs Bezeichnung","Teilnehmerzahl\n");
+    	try(Connection con = DriverManager.getConnection(url)){
+    		Class.forName("oracle.jdbc.driver.OracleDriver");
+    		PreparedStatement stmt = con.prepareStatement(sqlString);
+    		ResultSet rs = stmt.executeQuery();
+    		while(rs.next()) {
+    			ausgabe.concat(String.format("%-10d|%-20s|%-10d", rs.getInt(1), rs.getString(2), rs.getInt(3)));
+    		}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return ausgabe;
     }
 }
