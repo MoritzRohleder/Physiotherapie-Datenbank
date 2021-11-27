@@ -103,24 +103,40 @@ INSERT INTO qualifikation VALUES (10, 'Gerätegestüzte Krankengymnastik (KGG)',
 -- idMitarbeiter, nachname, vorname, geschlecht, idQuali
 INSERT INTO mitarbeiter VALUES (1, 'Risel', 'Hubert', 'männlich');
 INSERT INTO mitarbeiter VALUES (2, 'Reinert', 'Melissa', 'weiblich');
-INSERT INTO mitarbeiter VALUES ();
-INSERT INTO mitarbeiter VALUES ();
-INSERT INTO mitarbeiter VALUES ();
+INSERT INTO mitarbeiter VALUES (3, 'Peters', 'Peter', 'männlich');
+INSERT INTO mitarbeiter VALUES (4, 'Janßen', 'Marie', 'weiblich');
+INSERT INTO mitarbeiter VALUES (5, 'Liebherr', 'Rudolf', 'männlich');
 
 --Einfügen der Qualifikationen der einzelnen Mitarbeiter
 -- idMitarbeiter, idQuali
 INSERT INTO qualifiziert VALUES (1, 1);
 INSERT INTO qualifiziert VALUES (2, 1);
+INSERT INTO qualifiziert VALUES (3, 2);
+INSERT INTO qualifiziert VALUES (4, 2);
+INSERT INTO qualifiziert VALUES (5, 1);
+INSERT INTO qualifiziert VALUES (1, 6);
+INSERT INTO qualifiziert VALUES (1,10);
+INSERT INTO qualifiziert VALUES (2,7);
+INSERT INTO qualifiziert VALUES (2, 9);
+INSERT INTO qualifiziert VALUES (3, 3);
+INSERT INTO qualifiziert VALUES (4,4);
+INSERT INTO qualifiziert VALUES (5,2);
+INSERT INTO qualifiziert VALUES (5, 5);
 
 --Einfügen der Kurse
 -- idKurs, bezeichnung, beschreibung, idMitarbeiter, preis
-INSERT INTO kurs VALUES (1, 'Reha', 'Rehabilitations Kurs', 1, 50);
-INSERT INTO kurs VALUES (2, 'Krankengymnastik', 'Rücken stärkende Gymnastik', 2, 45);
-INSERT INTO kurs VALUES (3, 'KGG', 'Gerätegestüzte Krankengymnastik', 2, 120);
-INSERT INTO kurs VALUES (4, 'Faszien', 'Training mit Rolle', 3, 60);
+INSERT INTO kurs VALUES (1, 'Reha', 'Rehabilitations Kurs', 3, 50);
+INSERT INTO kurs VALUES (2, 'Krankengymnastik', 'Rücken stärkende Gymnastik', 4, 45);
+INSERT INTO kurs VALUES (3, 'KGG', 'Gerätegestüzte Krankengymnastik', 1, 120);
+INSERT INTO kurs VALUES (4, 'Faszien', 'Training mit Rolle', 2, 60);
+INSERT INTO kurs VALUES (5, 'Fort. Reha', 'Fortgeschrittener Reha Kurs', 5, 80);
 
 --Einfügen der Kursteilnahmen
 -- idKurs, idPatient, termin
 INSERT INTO kursteilnahme VALUES (1, 1, 'Mittwochs 16:00');
 INSERT INTO kursteilnahme VALUES (1, 2, 'Montags 13:00');
 INSERT INTO kursteilnahme VALUES (2, 1, 'Mittwochs 16:00');
+INSERT INTO kursteilnahme VALUES (2, 3, 'Mittwochs 16:00');
+INSERT INTO kursteilnahme VALUES (3, 5, 'Donnerstags 15:30');
+INSERT INTO kursteilnahme VALUES (4, 5, 'Freitags 7:15');
+INSERT INTO kursteilnahme VALUES (5, 4, 'Dienstags 20:00');
