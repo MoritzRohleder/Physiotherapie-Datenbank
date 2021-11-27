@@ -10,7 +10,6 @@
  */
 package interaktion;
 import java.util.Scanner;
-
 import dbverbindung.DBManager;
 
 public class Hauptmenu {
@@ -19,7 +18,6 @@ public class Hauptmenu {
 	private static final int[] stellen = {13,3,5,5,3,2};
 	private static int wahl;
 	public static Scanner sc = new Scanner(System.in);
-
 	public static void main(String[] args) {
 		do {
 			System.out.println("(1) Anzeigen");
@@ -37,10 +35,10 @@ public class Hauptmenu {
 					insert(tabellenauswahl());
 					break;
 				case 3: //Ändern eines oder mehrere Werte in einem oder mehrerer Datensätze einer Tabelle
-					update();
+					update(tabellenauswahl());
 					break;
 				case 4: //löschen eines datensatzes einer tabelle
-					delete();
+					delete(tabellenauswahl());
 					break;
 				case 5: //spezielle vordefinierte abfragen
 					abfragen();
@@ -52,7 +50,10 @@ public class Hauptmenu {
 			}
 		}while (wahl!=6);
 	}
-	
+	/**
+	 * Made to reduce redundancy in code
+	 * @return returns a number fitting the table choice given
+	 */
 	private static int tabellenauswahl() {
 		System.out.printf("(1) %s\n", tabellen[0]);
 		System.out.printf("(2) %s\n", tabellen[1]);
@@ -77,14 +78,33 @@ public class Hauptmenu {
 		DBManager.insert(tabellen[table], eingabe);
 	}
 	
-	private static void update() {
+	private static void update(int table) {
 		
 	}
-	
-	private static void delete() {
-		
+	/**
+	 * Metho
+	 * @param table
+	 */
+	private static void delete(int table) {
+		System.out.println(dbverbindung.DBManager.showTable(tabellen[table]));
+		System.out.println("Wie viele Primärschlüssel gibt es: ");
+		int wahl = sc.nextInt();
+		String[] columns = new String[wahl];
+		System.out.println("Die Column auswählen:");
+		columns[0] = sc.nextLine();
+		int[] primaryKeys = new int[wahl];
+		for(int i=0;i<columns.length;i++){
+			columns[i] = sc.nextLine();
+		}
+		System.out.println("Bitte wählen sie die Primärschlüssel aus:");
+		for(int i=0;i<primaryKeys.length;i++){
+			primaryKeys[i] = sc.nextInt();
+		}
+		DBManager.delete(tabellen[table], columns, primaryKeys);
 	}
-	
+	/**
+	 * Gives a return from the database regarding the choice selected
+	 */
 	private static void abfragen() {
 		System.out.println("(1) Anzahl der Tupel pro Qualifikation");
 		System.out.println("(2) Anzahl Teilnehmer pro Kurs");

@@ -123,7 +123,7 @@ public class DBManager {
      * 
      * @param table	A string containing the name of the table where something is to be deleted
      * @param columns	An array of Strings containing the column names where conditions are set
-     * @param primaryKeys	An array of Strings containing the primary keys of the data that is to be deleted
+     * @param primaryKeys	An array of Integers containing the primary keys of the data that is to be deleted
      */
     public static void delete(String table, String[] columns, int[] primaryKeys) {
     	String sqlString = String.format("DELETE FROM %s ", table);
