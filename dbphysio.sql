@@ -82,7 +82,7 @@ CREATE TABLE kursteilnahme (
 --idPatient, nachname, vorname, geschlecht, geburtsdatum, krankenkasse, versichertennummer, tel, mail, wohnort, strasse, plz, hausnummer
 INSERT INTO patient VALUES (1, 'Liebermensch', 'Ralph', 'männlich', '09.03.1986', 'Techniker Krankenkasse', 6470263707, '02873 6725', 'ralph-liebermensch@web.de', 'Düsseldorf', 'Liebstrasse', 40210,5);
 INSERT INTO patient VALUES (2, 'Hans', 'Jasmin', 'weiblich', '31.08.1974', 'AOK', 8765402579, '02634 7680215', 'hans.jasmin@gmail.com', 'Duisburg', 'Stadtallee', 47055, 90);
-INSERT INTO patient VALUES (3, 'Frank', 'Josephine', 'weiblich', '27.11.2000', 'Barmer' 6481695459, '02578 46239', 'kleine.eule@web.de', 'Frankfurt', 'Bahnhofstraße' , 60306, 10);
+INSERT INTO patient VALUES (3, 'Frank', 'Josephine', 'weiblich', '27.11.2000', 'Barmer', 6481695459, '02578 46239', 'kleine.eule@web.de', 'Frankfurt', 'Bahnhofstraße' , 60306, 10);
 INSERT INTO patient VALUES (4, 'Mueller', 'Wolfgang', 'männlich', '24.09.1972', 'Knappschaft', 1798697501, '05602 56294627', 'mueller.muenchen@gmail.de', 'München', 'Tropfstraße', 28947, 87);
 INSERT INTO patient VALUES (5, 'Kastell', 'Nina', 'weiblich', '23.08.1964', 'Techniker Krankenkasse', 8998534687, '02489 31729', 'nina@mellis.de', 'Mühlheim', 'Theodorstraße', 45478, 28);
 
@@ -96,7 +96,7 @@ INSERT INTO qualifikation VALUES (5, 'Sportwissenschaftler', 2);
 INSERT INTO qualifikation VALUES (6, 'Manuelle Therapie (MT)', 1);
 INSERT INTO qualifikation VALUES (7, 'Manuelle Lymphdrainage (MLD)', 1);
 INSERT INTO qualifikation VALUES (8, 'Krankengymnastik nach Bobath (KG-ZNS)', 1);
-INSERT INTO qualifikation VALUES (9, 'Propriozeptive Neuromuskuläre Facilitation (PNF)', 1)
+INSERT INTO qualifikation VALUES (9, 'Propriozeptive Neuromuskuläre Facilitation', 1);
 INSERT INTO qualifikation VALUES (10, 'Gerätegestüzte Krankengymnastik (KGG)', 1);
 
 --Einfügen der Mitarbeiter
