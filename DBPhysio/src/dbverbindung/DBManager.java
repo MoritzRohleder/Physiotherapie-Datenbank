@@ -253,7 +253,7 @@ public class DBManager {
     	return "";
     }
     
-    //Die Anzahl der Mitarbeiter die eine gegebene Qualifikation haben(ID)
+    //Wurde nachgereicht
     public static int getEmployeeCount(int id) {
     	String sqlString = "SELECT DISTINCT Q.idQuali, U.bezeichnung, COUNT(Q.idMitarbeiter) AS Mitarbeiter "
     					 + "FROM qualifikation U, qualifiziert Q "
