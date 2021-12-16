@@ -247,7 +247,7 @@ public class DBManager {
     	return ausgabe;
     }
 
-    //Eine Liste der Mitarbeiter mit der gegebenen Qualifikation(ID)
+    //Wurde nachgereicht
     public static String getEmployeeList(int id) {
     	String sqlString = "SELECT Q.idQuali, U.bezeichnung, Q.idMitarbeiter, M.nachname, M.vorname "
     					 + "FROM mitarbeiter M, qualifiziert Q, qualifikation U "
