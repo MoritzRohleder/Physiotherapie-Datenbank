@@ -249,8 +249,24 @@ public class DBManager {
 
     //Eine Liste der Mitarbeiter mit der gegebenen Qualifikation(ID)
     public static String getEmployeeList(int id) {
-    	//TODO
-    	return "";
+    	String sqlString = "SELECT Q.idQuali, U.bezeichnung, Q.idMitarbeiter, M.nachname, M.vorname "
+    					 + "FROM mitarbeiter M, qualifiziert Q, qualifikation U "
+    					 + "WHERE M.idMitarbeiter = Q.idMitarbeiter "
+    					 + "AND Q.idQuali = U.idQuali "
+    					 + "AND Q.idQuali = ?";
+    	String ausgabe = String.format("%-10s|%-25s|%-10s|%-15s|%-15s\n", "ID Kurs", "Kursbezeichnung", "ID Patient", "Nachname", "Vorname");
+    	try(Connection con = DriverManager.getConnection(url,"C##FBPOOL148","oracle")){
+    		Class.forName("oracle.jdbc.driver.OracleDriver");
+    		PreparedStatement stmt = con.prepareStatement(sqlString);
+    		stmt.setInt(1, id);
+    		ResultSet rs = stmt.executeQuery();
+    		while(rs.next()) {
+    			ausgabe += String.format("%-10d|%-25s|%-10d|%-15s|%-15s\n", rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5));
+    		}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return ausgabe;
     }
     
     //Wurde nachgereicht
