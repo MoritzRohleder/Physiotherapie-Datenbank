@@ -248,6 +248,11 @@ public class DBManager {
     }
 
     //Wurde nachgereicht
+	/**
+	 * A method to get a list of all employees with a given qualifikation
+	 *
+	 * @return A string with the list of employees with the given qualifikation
+	 */
     public static String getEmployeeList(int id) {
     	String sqlString = "SELECT Q.idQuali, U.bezeichnung, Q.idMitarbeiter, M.nachname, M.vorname "
     					 + "FROM mitarbeiter M, qualifiziert Q, qualifikation U "
@@ -270,6 +275,11 @@ public class DBManager {
     }
     
     //Wurde nachgereicht
+	/**
+	 * To get the amount of employees with a given qualifikation
+	 *
+	 * @return An int with the amount of employees
+	 */
     public static int getEmployeeCount(int id) {
     	String sqlString = "SELECT DISTINCT Q.idQuali, U.bezeichnung, COUNT(Q.idMitarbeiter) AS Mitarbeiter "
     					 + "FROM qualifikation U, qualifiziert Q "
