@@ -259,9 +259,28 @@ public class DBManager {
     	return 0;
     }
     
-    //Die Anzahl der qualifizierten Mitarbeiter aller Qualifikationen
+    //Wurde nachgereicht
+	/**
+     * This method is to return a list of the employee count of the qualifikations
+	 * 
+	 * @return A String containing a formatted list of all qualifikations with the amount of qualified employees	
+	 */
 	public static String getEmployeeCountAll() {
-		//TODO
-		return "";
+		String sqlString = "SELECT DISTINCT Q.idQuali, U.bezeichnung, COUNT(Q.idMitarbeiter) AS Mitarbeiter "
+    					 + "FROM qualifikation U, qualifiziert Q "
+    					 + "WHERE U.idQuali = Q.idQuali "
+    					 + "GROUP BY Q.idQuali, U.bezeichnung";
+    	String ausgabe = String.format("%-10s|%-20s|%-10s\n", "Quali ID", "Quali Bezeichnung","Mitarbeiter");
+    	try(Connection con = DriverManager.getConnection(url,"C##FBPOOL148","oracle")){
+    		Class.forName("oracle.jdbc.driver.OracleDriver");
+    		PreparedStatement stmt = con.prepareStatement(sqlString);
+    		ResultSet rs = stmt.executeQuery();
+    		while(rs.next()) {
+    			ausgabe += String.format("%-10d|%-20s|%-10d\n", rs.getInt(1), rs.getString(2), rs.getInt(3));
+    		}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return ausgabe;
 	}
 }
