@@ -255,8 +255,23 @@ public class DBManager {
     
     //Die Anzahl der Mitarbeiter die eine gegebene Qualifikation haben(ID)
     public static int getEmployeeCount(int id) {
-    	//TODO
-    	return 0;
+    	String sqlString = "SELECT DISTINCT Q.idQuali, U.bezeichnung, COUNT(Q.idMitarbeiter) AS Mitarbeiter "
+    					 + "FROM qualifikation U, qualifiziert Q "
+    					 + "WHERE U.idQuali = Q.idQuali "
+						 + "AND Q.idQuali = " + id
+    					 + "GROUP BY Q.idQuali, U.bezeichnung";
+    	int employeeCount = 0;
+    	try(Connection con = DriverManager.getConnection(url,"C##FBPOOL148","oracle")){
+    		Class.forName("oracle.jdbc.driver.OracleDriver");
+    		PreparedStatement stmt = con.prepareStatement(sqlString);
+    		ResultSet rs = stmt.executeQuery();
+    		while(rs.next()) {
+    			employeeCount = rs.getInt(3);
+    		}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return employeeCount;
     }
     
     //Wurde nachgereicht
